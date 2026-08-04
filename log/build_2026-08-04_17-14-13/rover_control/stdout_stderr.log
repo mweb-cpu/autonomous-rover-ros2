@@ -1,0 +1,35 @@
+running egg_info
+creating ../../build/rover_control/rover_control.egg-info
+writing ../../build/rover_control/rover_control.egg-info/PKG-INFO
+writing dependency_links to ../../build/rover_control/rover_control.egg-info/dependency_links.txt
+writing entry points to ../../build/rover_control/rover_control.egg-info/entry_points.txt
+writing requirements to ../../build/rover_control/rover_control.egg-info/requires.txt
+writing top-level names to ../../build/rover_control/rover_control.egg-info/top_level.txt
+writing manifest file '../../build/rover_control/rover_control.egg-info/SOURCES.txt'
+reading manifest file '../../build/rover_control/rover_control.egg-info/SOURCES.txt'
+writing manifest file '../../build/rover_control/rover_control.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/m4tt/ros2_ws/build/rover_control/build
+creating /home/m4tt/ros2_ws/build/rover_control/build/lib
+creating /home/m4tt/ros2_ws/build/rover_control/build/lib/rover_control
+copying rover_control/__init__.py -> /home/m4tt/ros2_ws/build/rover_control/build/lib/rover_control
+copying rover_control/hello_node.py -> /home/m4tt/ros2_ws/build/rover_control/build/lib/rover_control
+running install
+running install_lib
+creating /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control
+copying /home/m4tt/ros2_ws/build/rover_control/build/lib/rover_control/__init__.py -> /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control
+copying /home/m4tt/ros2_ws/build/rover_control/build/lib/rover_control/hello_node.py -> /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control
+byte-compiling /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control/__init__.py to __init__.cpython-312.pyc
+byte-compiling /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control/hello_node.py to hello_node.cpython-312.pyc
+running install_data
+creating /home/m4tt/ros2_ws/install/rover_control/share/ament_index
+creating /home/m4tt/ros2_ws/install/rover_control/share/ament_index/resource_index
+creating /home/m4tt/ros2_ws/install/rover_control/share/ament_index/resource_index/packages
+copying resource/rover_control -> /home/m4tt/ros2_ws/install/rover_control/share/ament_index/resource_index/packages
+copying package.xml -> /home/m4tt/ros2_ws/install/rover_control/share/rover_control
+running install_egg_info
+Copying ../../build/rover_control/rover_control.egg-info to /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control-0.0.0-py3.12.egg-info
+running install_scripts
+Installing hello_node script to /home/m4tt/ros2_ws/install/rover_control/lib/rover_control
+writing list of installed files to '/home/m4tt/ros2_ws/build/rover_control/install.log'

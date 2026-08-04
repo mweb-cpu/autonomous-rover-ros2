@@ -1,0 +1,37 @@
+[1.494s] Invoking command in '/home/m4tt/ros2_ws/src/rover_control': PYTHONPATH=/home/m4tt/ros2_ws/build/rover_control/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/rover_control build --build-base /home/m4tt/ros2_ws/build/rover_control/build install --record /home/m4tt/ros2_ws/build/rover_control/install.log --install-scripts $base/lib/rover_control --single-version-externally-managed install_data
+[1.767s] running egg_info
+[1.767s] creating ../../build/rover_control/rover_control.egg-info
+[1.781s] writing ../../build/rover_control/rover_control.egg-info/PKG-INFO
+[1.781s] writing dependency_links to ../../build/rover_control/rover_control.egg-info/dependency_links.txt
+[1.782s] writing entry points to ../../build/rover_control/rover_control.egg-info/entry_points.txt
+[1.782s] writing requirements to ../../build/rover_control/rover_control.egg-info/requires.txt
+[1.782s] writing top-level names to ../../build/rover_control/rover_control.egg-info/top_level.txt
+[1.782s] writing manifest file '../../build/rover_control/rover_control.egg-info/SOURCES.txt'
+[1.810s] reading manifest file '../../build/rover_control/rover_control.egg-info/SOURCES.txt'
+[1.811s] writing manifest file '../../build/rover_control/rover_control.egg-info/SOURCES.txt'
+[1.812s] running build
+[1.812s] running build_py
+[1.813s] creating /home/m4tt/ros2_ws/build/rover_control/build
+[1.813s] creating /home/m4tt/ros2_ws/build/rover_control/build/lib
+[1.814s] creating /home/m4tt/ros2_ws/build/rover_control/build/lib/rover_control
+[1.814s] copying rover_control/__init__.py -> /home/m4tt/ros2_ws/build/rover_control/build/lib/rover_control
+[1.815s] copying rover_control/hello_node.py -> /home/m4tt/ros2_ws/build/rover_control/build/lib/rover_control
+[1.815s] running install
+[1.820s] running install_lib
+[1.833s] creating /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control
+[1.834s] copying /home/m4tt/ros2_ws/build/rover_control/build/lib/rover_control/__init__.py -> /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control
+[1.834s] copying /home/m4tt/ros2_ws/build/rover_control/build/lib/rover_control/hello_node.py -> /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control
+[1.835s] byte-compiling /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control/__init__.py to __init__.cpython-312.pyc
+[1.836s] byte-compiling /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control/hello_node.py to hello_node.cpython-312.pyc
+[1.836s] running install_data
+[1.837s] creating /home/m4tt/ros2_ws/install/rover_control/share/ament_index
+[1.837s] creating /home/m4tt/ros2_ws/install/rover_control/share/ament_index/resource_index
+[1.838s] creating /home/m4tt/ros2_ws/install/rover_control/share/ament_index/resource_index/packages
+[1.838s] copying resource/rover_control -> /home/m4tt/ros2_ws/install/rover_control/share/ament_index/resource_index/packages
+[1.838s] copying package.xml -> /home/m4tt/ros2_ws/install/rover_control/share/rover_control
+[1.838s] running install_egg_info
+[1.853s] Copying ../../build/rover_control/rover_control.egg-info to /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control-0.0.0-py3.12.egg-info
+[1.856s] running install_scripts
+[1.953s] Installing hello_node script to /home/m4tt/ros2_ws/install/rover_control/lib/rover_control
+[1.954s] writing list of installed files to '/home/m4tt/ros2_ws/build/rover_control/install.log'
+[1.984s] Invoked command in '/home/m4tt/ros2_ws/src/rover_control' returned '0': PYTHONPATH=/home/m4tt/ros2_ws/build/rover_control/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/rover_control build --build-base /home/m4tt/ros2_ws/build/rover_control/build install --record /home/m4tt/ros2_ws/build/rover_control/install.log --install-scripts $base/lib/rover_control --single-version-externally-managed install_data
