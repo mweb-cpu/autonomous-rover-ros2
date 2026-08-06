@@ -24,7 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'hello_node = rover_control.hello_node:main'
+            'rover_node = rover_control.rover_node:main'
         ],
     },
 )
