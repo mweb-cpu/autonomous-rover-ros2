@@ -20,6 +20,12 @@ class Rover:
         self.direction = "SOUTH"
         self.battery = 100
 
+    # moves rover to coordinates
+    def move_to(self, x, y):
+        self.world.update_rover
+        self.x = x
+        self.y = y
+
     # turns rover left or right and decreases battery
     def turn_left(self):
         current = DIRECTIONS.index(self.direction)

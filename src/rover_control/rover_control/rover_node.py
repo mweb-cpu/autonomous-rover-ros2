@@ -2,7 +2,6 @@ from .rover import Rover
 from .map import Map
 from .planner import Planner
 
-
 import rclpy
 from rclpy.node import Node
 
@@ -26,15 +25,26 @@ class RoverNode(Node):
 
         if path is not None:
             self.get_logger().info(f"Path found: {path}")
-            self.rover.follow_path(path, self.world)
-            self.get_logger().info("Rover reached the goal!")
+            self.path = path
+            self.timer = self.create_timer(1.0, self.move_rover)
 
         else:
             self.get_logger().info("No path found")
 
-        self.world.display()
         self.get_logger().info("Rover simulation loaded")
 
+    def move_rover(self):
+        if self.path:
+            next_position = self.path.pop(0)
+            x, y = next_position
+
+            self.rover.move_to(x,y)
+
+            self.get_logger().info(f"Moved to ({x}, {y})")
+        else:
+            self.get_logger().info("Goal reached!")
+            self.world.display()
+            self.timer.cancel()
 
 def main(args=None):
     rclpy.init(args=args)
