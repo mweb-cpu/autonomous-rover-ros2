@@ -22,7 +22,7 @@ class Rover:
 
     # moves rover to coordinates
     def move_to(self, x, y):
-        self.world.update_rover
+        self.world.update_rover(x,y)
         self.x = x
         self.y = y
 

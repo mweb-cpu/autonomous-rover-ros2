@@ -15,13 +15,13 @@ class RoverNode(Node):
         self.rover = Rover(self.world)
         self.planner = Planner(self.world)
 
-        goal = self.world.place_goal()
+        self.goal = self.world.place_goal()
 
         self.get_logger().info(f"Rover starting position: ({self.rover.x}, {self.rover.y})")
-        self.get_logger().info(f"Goal position: {goal}")
+        self.get_logger().info(f"Goal position: {self.goal}")
         self.world.display()
 
-        path = self.planner.bfs((self.rover.x, self.rover.y), goal)
+        path = self.planner.bfs((self.rover.x, self.rover.y), self.goal)
 
         if path is not None:
             self.get_logger().info(f"Path found: {path}")
@@ -41,8 +41,15 @@ class RoverNode(Node):
             self.rover.move_to(x,y)
 
             self.get_logger().info(f"Moved to ({x}, {y})")
+
+            self.world.display()
+
+            if (self.rover.x, self.rover.y) == self.goal:
+               self.get_logger().info("Rover reached goal")
+               self.timer.cancel()
+
         else:
-            self.get_logger().info("Goal reached!")
+            self.get_logger().info("Path completed")
             self.world.display()
             self.timer.cancel()
 
