@@ -4,6 +4,7 @@ from .planner import Planner
 
 import rclpy
 from rclpy.node import Node
+from geometry_msgs.msg import Point
 
 class RoverNode(Node):
 
@@ -33,12 +34,22 @@ class RoverNode(Node):
 
         self.get_logger().info("Rover simulation loaded")
 
+        self.position_publisher = self.create_publisher(Point, "rover_position", 10)
+
     def move_rover(self):
         if self.path:
             next_position = self.path.pop(0)
             x, y = next_position
 
             self.rover.move_to(x,y)
+
+            msg = Point()
+
+            msg.x = float(self.rover.x)
+            msg.y = float(self.rover.y)
+            msg.z = 0.0
+
+            self.position_publisher.publish(msg)
 
             self.get_logger().info(f"Moved to ({x}, {y})")
 

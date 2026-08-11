@@ -1,10 +1,12 @@
 /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control/planner.py
+/home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control/rover_monitor.py
 /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control/__init__.py
 /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control/hello_node.py
 /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control/rover_node.py
 /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control/map.py
 /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control/rover.py
 /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control/__pycache__/planner.cpython-312.pyc
+/home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control/__pycache__/rover_monitor.cpython-312.pyc
 /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control/__pycache__/__init__.cpython-312.pyc
 /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control/__pycache__/hello_node.cpython-312.pyc
 /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control/__pycache__/rover_node.cpython-312.pyc
@@ -19,4 +21,5 @@
 /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control-0.0.0-py3.12.egg-info/SOURCES.txt
 /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control-0.0.0-py3.12.egg-info/zip-safe
 /home/m4tt/ros2_ws/install/rover_control/lib/python3.12/site-packages/rover_control-0.0.0-py3.12.egg-info/dependency_links.txt
+/home/m4tt/ros2_ws/install/rover_control/lib/rover_control/rover_monitor
 /home/m4tt/ros2_ws/install/rover_control/lib/rover_control/rover_node
