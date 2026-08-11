@@ -16,6 +16,8 @@ rover_control/planner.py
 rover_control/rover.py
 rover_control/rover_monitor.py
 rover_control/rover_node.py
+rover_control/sensor_node.py
+rover_control/sensors.py
 test/test_copyright.py
 test/test_flake8.py
 test/test_pep257.py
