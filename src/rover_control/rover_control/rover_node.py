@@ -5,7 +5,7 @@ from .planner import Planner
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Point
-from std_msgs.msg import String
+from std_msgs.msg import Int32, String
 
 class RoverNode(Node):
 
@@ -40,6 +40,8 @@ class RoverNode(Node):
         self.direction_publisher = self.create_publisher(String, "rover_direction", 10)
 
         self.map_publisher = self.create_publisher(String, "rover_map", 10)
+
+        self.sensor_supscription = self.create_subscription(Int32, "distance_sensor", self.sensor_callback, 10)
 
     def move_rover(self):
         if self.path:
@@ -83,6 +85,10 @@ class RoverNode(Node):
         msg.data = map_data
 
         self.map_publisher.publish(msg)
+
+    def sensor_callback(self, msg):
+        distance = msg.data
+        self.get_logger().info(f"Rover received sensor distance: {distance}")
 
 def main(args=None):
     rclpy.init(args=args)
