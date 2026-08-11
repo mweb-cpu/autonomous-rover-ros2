@@ -5,6 +5,7 @@ from .planner import Planner
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Point
+from std_msgs.msg import String
 
 class RoverNode(Node):
 
@@ -36,6 +37,10 @@ class RoverNode(Node):
 
         self.position_publisher = self.create_publisher(Point, "rover_position", 10)
 
+        self.direction_publisher = self.create_publisher(String, "rover_direction", 10)
+
+        self.map_publisher = self.create_publisher(String, "rover_map", 10)
+
     def move_rover(self):
         if self.path:
             next_position = self.path.pop(0)
@@ -43,13 +48,17 @@ class RoverNode(Node):
 
             self.rover.move_to(x,y)
 
-            msg = Point()
+            self.publish_map()
 
-            msg.x = float(self.rover.x)
-            msg.y = float(self.rover.y)
-            msg.z = 0.0
+            position_msg = Point()
+            position_msg.x = float(self.rover.x)
+            position_msg.y = float(self.rover.y)
+            position_msg.z = 0.0
+            self.position_publisher.publish(position_msg)
 
-            self.position_publisher.publish(msg)
+            direction_msg = String()
+            direction_msg.data = self.rover.direction
+            self.direction_publisher.publish(direction_msg)
 
             self.get_logger().info(f"Moved to ({x}, {y})")
 
@@ -63,6 +72,17 @@ class RoverNode(Node):
             self.get_logger().info("Path completed")
             self.world.display()
             self.timer.cancel()
+
+    def publish_map(self):
+        msg = String()
+
+        map_data = "\n".join(
+            "".join(row) for row in self.world.grid
+        )
+
+        msg.data = map_data
+
+        self.map_publisher.publish(msg)
 
 def main(args=None):
     rclpy.init(args=args)
