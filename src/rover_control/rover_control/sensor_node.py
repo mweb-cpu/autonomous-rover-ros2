@@ -11,27 +11,28 @@ class SensorNode(Node):
     def __init__(self):
         super().__init__("sensor_node")
 
-        self.world = None
-        self.sensor = DistanceSensor(self.world)
-
+        # Store Current Position and Direction
         self.rover_x = 0
         self.rover_y = 0
         self.rover_direction = "NORTH"
 
+        # Access the rover environment (map received from rover_node)
+        self.world = None
+        self.sensor = DistanceSensor(self.world)
+
+        # ROS2 Subscribers 
         self.position_subscription = self.create_subscription(
             Point,
             "rover_position",
             self.position_callback,
             10
         )
-
         self.direction_subscription = self.create_subscription(
             String,
             "rover_direction",
             self.direction_callback,
             10
         )
-
         self.map_subscription = self.create_subscription(
             String,
             "rover_map",
@@ -39,26 +40,30 @@ class SensorNode(Node):
             10
         )
 
-        self.publisher = self.create_publisher(
+        # ROS2 Publisher
+        self.distance_publisher = self.create_publisher(
             Int32,
             "distance_sensor",
             10
         )
 
+        # Check sensor every 1 second
         self.timer = self.create_timer(
             1.0,
             self.publish_distance
         )
 
+    # Updates new position when position message is received
     def position_callback(self, msg):
         self.rover_x = int(msg.x)
         self.rover_y = int(msg.y)
 
+    # Updates new direction when direction message is received
     def direction_callback(self, msg):
         self.rover_direction = msg.data
 
+    # Updates sensor's map when map message is received
     def map_callback(self, msg):
-        self.get_logger().info("Map received")
 
         rows = msg.data.split("\n")
 
@@ -66,11 +71,9 @@ class SensorNode(Node):
         self.world.grid = [list(row) for row in rows]
 
         self.sensor.world = self.world
-        self.get_logger().info("Sensor map updated")
 
+    # Calculates and Publishes the distance of nearest obstacle in the facing direction
     def publish_distance(self):
-
-        self.get_logger().info("Sensor timer running")
 
         if self.world is None:
             self.get_logger().info("Waiting for map...")
@@ -89,7 +92,7 @@ class SensorNode(Node):
         msg = Int32()
         msg.data = distance
 
-        self.publisher.publish(msg)
+        self.distance_publisher.publish(msg)
 
         self.get_logger().info(
             f"Distance: {distance}"
