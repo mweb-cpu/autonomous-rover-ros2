@@ -17,12 +17,23 @@ class Rover:
     def __init__(self, world):
         self.world = world
         self.x, self.y = self.world.place_rover()
-        self.direction = "SOUTH"
+        self.direction = "NORTH"
         self.battery = 100
 
     # moves rover to coordinates
     def move_to(self, x, y):
         self.world.update_rover(x,y)
+
+        # Determine direction based on movement
+        if x > self.x:
+            self.direction = "EAST"
+        elif x < self.x:
+            self.direction = "WEST"
+        elif y > self.y:
+            self.direction = "SOUTH"
+        elif y < self.y:
+            self.direction = "NORTH"
+
         self.x = x
         self.y = y
 

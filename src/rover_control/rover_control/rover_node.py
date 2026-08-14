@@ -133,7 +133,6 @@ class RoverNode(Node):
 
     def sensor_callback(self, msg):
         distance = msg.data
-        self.get_logger().info(f"Rover received sensor distance: {distance}")
 
 def main(args=None):
     rclpy.init(args=args)
