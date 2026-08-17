@@ -26,7 +26,8 @@ setup(
         'console_scripts': [
             'rover_node = rover_control.rover_node:main',
             'rover_monitor = rover_control.rover_monitor:main',
-            'sensor_node = rover_control.sensor_node:main'
+            'sensor_node = rover_control.sensor_node:main',
+            'visualizer = rover_control.visualizer:main'
         ],
     },
 )

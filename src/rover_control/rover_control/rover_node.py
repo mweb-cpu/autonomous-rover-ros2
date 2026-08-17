@@ -37,6 +37,11 @@ class RoverNode(Node):
             "rover_map", 
             10
         )
+        self.path_publisher = self.create_publisher(
+            String,
+            "rover_path",
+            10
+        )
 
         # ROS2 Subscriber
         self.sensor_subscription = self.create_subscription(
@@ -64,6 +69,7 @@ class RoverNode(Node):
                 f"Path found: {path}"
             )
             self.path = path
+            self.publish_path()
             self.timer = self.create_timer(
                 1.0, 
                 self.move_rover
@@ -130,6 +136,18 @@ class RoverNode(Node):
         msg.data = map_data
 
         self.map_publisher.publish(msg)
+
+    def publish_path(self):
+        msg = String()
+
+        path_data = "\n".join(
+            f"{x},{y}"
+            for x, y in self.path
+        )
+
+        msg.data = path_data
+
+        self.path_publisher.publish(msg)
 
     def sensor_callback(self, msg):
         distance = msg.data

@@ -23,6 +23,7 @@ class RoverVisualizer(Node):
 
         # Current map
         self.grid = None
+        self.path = []
 
         # Subscribe to the rover's map
         self.map_subscription = self.create_subscription(
@@ -53,6 +54,14 @@ class RoverVisualizer(Node):
             Int32,
             "distance_sensor",
             self.sensor_callback,
+            10
+        )
+
+        # Subscribe to the rover's path
+        self.path_subscription = self.create_subscription(
+            String,
+            "rover_path",
+            self.path_callback,
             10
         )
 
@@ -117,6 +126,15 @@ class RoverVisualizer(Node):
 
         self.sensor_distance = msg.data
 
+    # Receive the rover's path
+    def path_callback(self, msg):
+        self.path = []
+
+        for line in msg.data.split("\n"):
+            if line:
+                x, y = line.split(",")
+                self.path.append((int(x), int(y)))
+
     # Draw the current map
     def draw_map(self):
 
@@ -160,6 +178,27 @@ class RoverVisualizer(Node):
                     fill=fill,
                     outline="gray"
                 )
+
+        # Draw the planned BFS path
+        for x, y in self.path:
+
+            # Don't cover the rover or goal
+            if self.grid[y][x] in ("R", "G"):
+                continue
+
+            x1 = x * self.cell_size
+            y1 = y * self.cell_size
+            x2 = x1 + self.cell_size
+            y2 = y1 + self.cell_size
+
+            self.canvas.create_rectangle(
+                x1,
+                y1,
+                x2,
+                y2,
+                fill="lightblue",
+                outline="gray"
+            )
 
         # Draw rover direction indicator
         if self.rover_x is not None and self.rover_y is not None:
