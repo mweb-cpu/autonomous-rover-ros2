@@ -240,6 +240,51 @@ class RoverVisualizer(Node):
                 arrow=tk.LAST
             )
 
+        self.draw_sensor_ray()
+
+    # Showing where the sensor is checking
+    def draw_sensor_ray(self):
+
+        if self.rover_x is None or self.sensor_distance is None:
+            return
+
+        # Direction → movement
+        directions = {
+            "NORTH": (0, -1),
+            "EAST": (1, 0),
+            "SOUTH": (0, 1),
+            "WEST": (-1, 0)
+        }
+
+        dx, dy = directions[self.rover_direction]
+
+        # Draw each cell detected by the sensor
+        for distance in range(1, self.sensor_distance + 1):
+
+            x = self.rover_x + dx * distance
+            y = self.rover_y + dy * distance
+
+            # Make sure the cell is inside the map
+            if not (0 <= y < len(self.grid)):
+                break
+
+            if not (0 <= x < len(self.grid[0])):
+                break
+
+            x1 = x * self.cell_size
+            y1 = y * self.cell_size
+            x2 = x1 + self.cell_size
+            y2 = y1 + self.cell_size
+
+            self.canvas.create_rectangle(
+                x1,
+                y1,
+                x2,
+                y2,
+                fill="yellow",
+                outline="gray"
+            )
+
     # Update the GUI
     def update_gui(self):
 
