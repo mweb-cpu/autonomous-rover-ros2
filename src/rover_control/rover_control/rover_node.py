@@ -20,6 +20,7 @@ class RoverNode(Node):
 
         # Place Goal
         self.goal = self.world.place_goal()
+        self.sensor_distance = None
 
         # ROS2 Publishers
         self.position_publisher = self.create_publisher(
@@ -68,7 +69,7 @@ class RoverNode(Node):
             self.get_logger().info(
                 f"Path found: {path}"
             )
-            self.path = path
+            self.path = path[1:]
             self.publish_path()
             self.timer = self.create_timer(
                 1.0, 
@@ -81,33 +82,168 @@ class RoverNode(Node):
         self.get_logger().info("Rover simulation loaded") # debug
 
     def move_rover(self):
+
+        # Check the sensor before moving
+        if self.sensor_distance == 1:
+
+            self.get_logger().info(
+                "Obstacle detected! Replanning..."
+            )
+
+            # Add the detected obstacle to the map
+            self.update_obstacle_from_sensor()
+
+            # Find a new path
+            if not self.replan():
+
+                self.get_logger().info(
+                    "Rover cannot reach the goal."
+                )
+
+                self.timer.cancel()
+                return
+
+        # Follow the current path
         if self.path:
-            # Get Next Position
-            x, y = self.path.pop(0)
 
-            # Move Rover
-            self.rover.move_to(x,y)
+            next_position = self.path.pop(0)
+            x, y = next_position
 
-            # Publish Rover Information
+            self.rover.move_to(x, y)
+
             self.publish_map()
             self.publish_position()
             self.publish_direction()
 
-            # Display Updated Map
             self.get_logger().info(
                 f"Moved to ({x}, {y})"
             )
+
             self.world.display()
 
-            # Check Goal
+            # Check if rover reached the goal
             if (self.rover.x, self.rover.y) == self.goal:
-               self.get_logger().info("Rover reached goal")
-               self.timer.cancel()
+
+                self.get_logger().info(
+                    "Rover reached goal"
+                )
+
+                self.timer.cancel()
 
         else:
-            self.get_logger().info("Path completed")
+
+            self.get_logger().info(
+                "Path completed"
+            )
+
             self.world.display()
             self.timer.cancel()
+
+    def decide_direction(self):
+
+        x = self.rover.x
+        y = self.rover.y
+
+        # Check the squares to the left and right
+        if self.rover.direction == "NORTH":
+            left = (x - 1, y)
+            right = (x + 1, y)
+
+        elif self.rover.direction == "EAST":
+            left = (x, y - 1)
+            right = (x, y + 1)
+
+        elif self.rover.direction == "SOUTH":
+            left = (x + 1, y)
+            right = (x - 1, y)
+
+        else:  # WEST
+            left = (x, y + 1)
+            right = (x, y - 1)
+
+        # Check whether the locations are valid
+        left_clear = (
+            0 <= left[0] < self.world.size
+            and 0 <= left[1] < self.world.size
+            and self.world.get_square(*left) != "X"
+        )
+
+        right_clear = (
+            0 <= right[0] < self.world.size
+            and 0 <= right[1] < self.world.size
+            and self.world.get_square(*right) != "X"
+        )
+
+        if left_clear:
+            self.get_logger().info(
+                f"Obstacle ahead. Left is clear: {left}"
+            )
+            return "LEFT"
+
+        elif right_clear:
+            self.get_logger().info(
+                f"Obstacle ahead. Right is clear: {right}"
+            )
+            return "RIGHT"
+
+        else:
+            self.get_logger().info(
+                "Obstacle ahead. No immediate alternatives."
+            )
+            return None
+
+    def update_obstacle_from_sensor(self):
+
+        directions = {
+            "NORTH": (0, -1),
+            "EAST": (1, 0),
+            "SOUTH": (0, 1),
+            "WEST": (-1, 0)
+        }
+
+        dx, dy = directions[self.rover.direction]
+
+        obstacle_x = self.rover.x + dx
+        obstacle_y = self.rover.y + dy
+
+        # Make sure the location is inside the map
+        if (
+            0 <= obstacle_x < self.world.size
+            and 0 <= obstacle_y < self.world.size
+        ):
+            self.world.grid[obstacle_y][obstacle_x] = "X"
+
+            self.get_logger().info(
+                f"Updated map: obstacle at "
+                f"({obstacle_x}, {obstacle_y})"
+            )
+
+    def replan(self):
+
+        start = (self.rover.x, self.rover.y)
+
+        new_path = self.planner.bfs(
+            start,
+            self.goal
+        )
+
+        if new_path is None:
+
+            self.get_logger().info(
+                "No new path to goal."
+            )
+
+            return False
+
+        self.path = new_path[1:]
+
+        self.get_logger().info(
+            f"New path found: {new_path}"
+        )
+
+        self.publish_path()
+
+        return True
 
     def publish_position(self):
 
@@ -150,7 +286,10 @@ class RoverNode(Node):
         self.path_publisher.publish(msg)
 
     def sensor_callback(self, msg):
-        distance = msg.data
+        self.sensor_distance = msg.data
+        self.get_logger().info(
+            f"Rover received sensor distance: {self.sensor_distance}"
+        )
 
 def main(args=None):
     rclpy.init(args=args)
